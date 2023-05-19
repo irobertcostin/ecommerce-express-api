@@ -16,39 +16,13 @@ export default (sequelize) => {
             primaryKey: true,
             autoIncrement: true
         },
-        customer_id: {
-            type: Sequelize.INTEGER,
-            validate: {
-                notNull: {
-                    msg: "Provide a customer id"
-                },
-                notEmpty: {
-                    msg: "Provide a customer id"
-                }
-            }
-        },
+
         amount: {
             type: Sequelize.INTEGER,
             validate: {
-                notNull: {
-                    msg: "Provide amount"
-                },
-                notEmpty: {
-                    msg: "Provide amount"
-                }
+                allowNull: false
             }
         },
-        order_email: {
-            type: Sequelize.STRING,
-            validate: {
-                notNull: {
-                    msg: "Provide email"
-                },
-                notEmpty: {
-                    msg: "Provide email"
-                }
-            }
-        }
 
 
     }, {

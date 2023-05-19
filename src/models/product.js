@@ -40,9 +40,6 @@ export default (sequelize) => {
                 }
             }
         },
-        create_date: {
-            type: Sequelize.DATE
-        },
         stock: {
             type: Sequelize.INTEGER,
             allowNull: false,
