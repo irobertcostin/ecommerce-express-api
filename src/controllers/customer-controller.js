@@ -47,11 +47,7 @@ let getCustomerByEmail = expressAsyncHandler((async (req, res) => {
 
     let x = customers.filter(e => e.email == email)
     console.log(x[0]);
-
     if (x) {
-
-
-
         res.status(200).json(x[0])
     } else {
         res.status(404).end(`No object with id ${id} found`)

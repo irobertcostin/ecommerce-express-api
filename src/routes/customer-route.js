@@ -11,11 +11,13 @@ const customerRouter = express.Router();
 customerRouter.route('/')
     .get(getAllCustomers, errorHandler)
 
-customerRouter.route('/:id')
+customerRouter.route('/email=:email')
+    .get(getCustomerByEmail, expressAsyncHandler)
+
+customerRouter.route('/id=:id')
     .get(getCustomerById, errorHandler)
 
-customerRouter.route('/:email')
-    .get(getCustomerByEmail, expressAsyncHandler)
+
 
 
 export default customerRouter;
