@@ -1,5 +1,4 @@
 import db from "../config/db.js";
-
 import expressAsyncHandler from "express-async-handler";
 // asyncHandler - pentru a nu mai pune try catch pe await 
 
@@ -98,5 +97,37 @@ let editCustomer = expressAsyncHandler((async (req, res) => {
 )
 
 
-export { getAllCustomers, getCustomerById, newCustomer, editCustomer, deleteCustomer, getCustomerByEmail }
+
+let login = expressAsyncHandler((async (req, res) => {
+
+    let foundUser = await db.models.customer.findOne({
+
+        where: {
+            email: req.body.email,
+        }
+    })
+
+
+    if (foundUser) {
+
+        if (foundUser.password !== req.body.password) {
+            res.status(401).json({
+                customerId: foundUser.id
+            })
+        } else {
+            res.status(401).json(`unauthorized : false password`)
+        }
+
+
+    } else {
+        res.status(404).json(`Have you registered yet?`)
+    }
+
+}))
+
+
+
+
+
+export { getAllCustomers, getCustomerById, newCustomer, editCustomer, deleteCustomer, getCustomerByEmail, login }
 
