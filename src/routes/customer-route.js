@@ -1,6 +1,6 @@
 import errorHandler from "../middleware/error-handler.js";
 import express from "express"
-import { getAllCustomers, getCustomerById, newCustomer, editCustomer, deleteCustomer, getCustomerByEmail } from "../controllers/customer-controller.js"
+import { login, getAllCustomers, getCustomerById, newCustomer, editCustomer, deleteCustomer, getCustomerByEmail } from "../controllers/customer-controller.js"
 import expressAsyncHandler from "express-async-handler";
 
 
@@ -18,6 +18,7 @@ customerRouter.route('/id=:id')
     .get(getCustomerById, errorHandler)
 
 
-
+customerRouter.route('/login')
+    .post(login, errorHandler)
 
 export default customerRouter;
