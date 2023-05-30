@@ -104,23 +104,35 @@ let login = expressAsyncHandler((async (req, res) => {
 
         where: {
             email: req.body.email,
+
         }
     })
 
 
     if (foundUser) {
 
-        if (foundUser.password !== req.body.password) {
-            res.status(401).json({
-                customerId: foundUser.id
+        if (foundUser.password === req.body.password) {
+
+
+
+            res.status(202).json({
+                user: {
+                    customerId: foundUser.id,
+                    full_name: foundUser.full_name,
+                    email: foundUser.email
+                }
             })
         } else {
-            res.status(401).json(`unauthorized : false password`)
+            res.status(401).json({
+                error: `unauthorized : false password`
+            })
         }
 
 
     } else {
-        res.status(404).json(`Have you registered yet?`)
+        res.status(404).json({
+            error: `Have you registered yet?`
+        })
     }
 
 }))
