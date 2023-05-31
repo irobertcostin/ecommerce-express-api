@@ -12,7 +12,7 @@ customerRouter.route('/')
     .get(getAllCustomers, errorHandler)
 
 customerRouter.route('/email=:email')
-    .get(getCustomerByEmail, expressAsyncHandler)
+    .get(getCustomerByEmail, errorHandler)
 
 customerRouter.route('/id=:id')
     .get(getCustomerById, errorHandler)
