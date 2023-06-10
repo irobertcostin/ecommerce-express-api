@@ -51,6 +51,13 @@ export default (sequelize) => {
                     msg: "Provide stock"
                 }
             }
+        },
+        url: {
+            type: Sequelize.STRING, // or DataTypes.TEXT for longer URLs
+            allowNull: false,
+            validate: {
+                isUrl: true, // enforce URL format validation
+            },
         }
 
 
@@ -66,6 +73,7 @@ export default (sequelize) => {
 
 
     return Product;
+
 
 
 }
