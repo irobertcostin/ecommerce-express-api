@@ -44,55 +44,59 @@ async function orderCheck(orderDto) {
 
     const { customer_id } = orderDto;
 
-    const { order } = orderDto;
+    const { customer_cart } = orderDto;
 
 
     const user = await db.models.customer.findByPk(customer_id);
-    console.log(user);
-
-
-    let map = new Map();
-
-
-    order.forEach(element => {
-
-        map.set(+element.product_id, element);
-    });
-
-
-
-    let products = await getProductsWithIds(Array.from(map.keys()));
-
-
-
 
 
 
 
     let amountTotal = 0;
 
-    products.forEach(element => {
+    customer_cart.forEach(element => {
 
         amountTotal += element.price;
 
     })
 
-
+    // console.log(amountTotal);
 
     let newOrder = {
-        amount: 10,
+        amount: amountTotal,
         customer_id: user.id
     }
 
 
-
     let createdOrder = await db.models.order.create(newOrder);
-    console.log(createdOrder);
+
+    // console.log(createdOrder.id);
 
 
 
-    // const orderDetails = db.models.order_details.bulkCreate([
 
+
+
+    customer_cart.forEach(element => {
+
+        let order_details = {
+            price: element.price,
+            quantity: element.quantity,
+            product_id: element.id,
+            order_id: createdOrder.id
+        }
+
+        db.models.order_details.create(order_details)
+            .then((result) => {
+                console.log("ok");
+            }).catch((err) => {
+                console.log(err);
+            });
+
+    })
+
+
+    // let orderDetails = await db.models.order_details.bulkCreate([
 
 
     // ])

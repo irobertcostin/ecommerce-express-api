@@ -8,6 +8,8 @@ import expressAsyncHandler from "express-async-handler";
 const orderRouter = express.Router();
 
 
+orderRouter.route('/')
+    .get(getAllOrders, errorHandler)
 
 
 orderRouter.route('/new')

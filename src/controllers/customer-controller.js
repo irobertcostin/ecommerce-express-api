@@ -2,6 +2,10 @@ import db from "../config/db.js";
 import expressAsyncHandler from "express-async-handler";
 // asyncHandler - pentru a nu mai pune try catch pe await 
 
+import { orderCheck } from "../service/order-service.js";
+
+
+//order-repo si order-detail-repo
 
 
 let getAllCustomers = expressAsyncHandler((async (req, res) => {
@@ -10,6 +14,10 @@ let getAllCustomers = expressAsyncHandler((async (req, res) => {
 })
 )
 
+
+
+
+
 let newCustomer = expressAsyncHandler((async (req, res) => {
 
     let newCustomer = req.body
@@ -17,6 +25,30 @@ let newCustomer = expressAsyncHandler((async (req, res) => {
     res.status(201).end('Successfully registered')
 })
 )
+
+
+
+
+
+
+
+
+
+
+
+
+let customerCart = expressAsyncHandler((async (req, res) => {
+
+    let newCart = req.body;
+    // await db.models.customer.create(newCustomer);
+    orderCheck(newCart)
+    // console.log(newCart);
+    res.status(200).send(newCart)
+})
+)
+
+
+
 
 
 let getCustomerById = expressAsyncHandler((async (req, res) => {
@@ -141,5 +173,5 @@ let login = expressAsyncHandler((async (req, res) => {
 
 
 
-export { getAllCustomers, getCustomerById, newCustomer, editCustomer, deleteCustomer, getCustomerByEmail, login }
+export { getAllCustomers, getCustomerById, newCustomer, editCustomer, deleteCustomer, getCustomerByEmail, login, customerCart }
 

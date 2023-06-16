@@ -13,25 +13,9 @@ let getAllOrders = expressAsyncHandler((async (req, res) => {
 
 let newOrder = expressAsyncHandler((async (req, res) => {
 
-
-
-    // console.log("ceva");
     let body = req.body
-    // console.log(body);
-
     await orderCheck(body);
-
-    // let newOrder = {
-    //     customer_id: body.customer_id,
-    //     amount: amountTotal
-    // }
-
-    // console.log(newOrder);
-
-    // await db.models.order.create(newOrder);
-
-
-    // res.status(201).send({ newOrder })
+    res.status(201).json("Accepted")
 })
 )
 
