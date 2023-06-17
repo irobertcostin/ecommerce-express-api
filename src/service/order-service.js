@@ -7,15 +7,42 @@ import { Sequelize } from "sequelize";
 
 
 
-async function getProductsWithIds(ids) {
+// async function getProductsWithIds(ids) {
+
+
+//     try {
+
+//         const products = await db.models.product.findAll({
+
+//             where: {
+//                 id: {
+//                     // id operator is in ids
+//                     [Sequelize.Op.in]: ids,
+//                 }
+//             },
+
+//         });
+
+//         return products;
+
+//     } catch (error) {
+//         console.error(error);
+//     }
+
+
+// }
+
+
+
+async function getOrdersByUser(ids) {
 
 
     try {
 
-        const products = await db.models.product.findAll({
+        const orders = await db.models.order.findAll({
 
             where: {
-                id: {
+                customer_id: {
                     // id operator is in ids
                     [Sequelize.Op.in]: ids,
                 }
@@ -23,7 +50,7 @@ async function getProductsWithIds(ids) {
 
         });
 
-        return products;
+        return orders;
 
     } catch (error) {
         console.error(error);
@@ -96,15 +123,6 @@ async function orderCheck(orderDto) {
     })
 
 
-    // let orderDetails = await db.models.order_details.bulkCreate([
-
-
-    // ])
-
-    // await createdOrder.addOrder_details(products)
-    // await createdOrder.save();
-
-
 }
 
 
@@ -114,4 +132,4 @@ async function orderCheck(orderDto) {
 
 
 
-export { orderCheck }
+export { orderCheck, getOrdersByUser }
