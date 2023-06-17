@@ -1,5 +1,5 @@
 import db from "../config/db.js";
-import { orderCheck } from "../service/order-service.js";
+import { orderCheck, getOrdersByUser } from "../service/order-service.js";
 import expressAsyncHandler from "express-async-handler";
 // asyncHandler - pentru a nu mai pune try catch pe await 
 
@@ -11,27 +11,33 @@ let getAllOrders = expressAsyncHandler((async (req, res) => {
 })
 )
 
+
+
+let getAllOrdersByCustomerId = expressAsyncHandler((async (req, res) => {
+    let ids = [];
+    ids.push(req.params.id)
+
+    let orders = await getOrdersByUser(ids)
+
+    if (orders.length > 0) {
+        res.status(200).json(orders)
+    } else {
+        res.status(404).json("This user has no orders")
+    }
+
+
+
+})
+)
+
+
+
+
 let newOrder = expressAsyncHandler((async (req, res) => {
 
-
-
-    // console.log("ceva");
     let body = req.body
-    // console.log(body);
-
     await orderCheck(body);
-
-    // let newOrder = {
-    //     customer_id: body.customer_id,
-    //     amount: amountTotal
-    // }
-
-    // console.log(newOrder);
-
-    // await db.models.order.create(newOrder);
-
-
-    // res.status(201).send({ newOrder })
+    res.status(201).json("Accepted")
 })
 )
 
@@ -47,7 +53,7 @@ let deleteOrder = expressAsyncHandler((async (req, res) => {
         res.status(202).json('Successfully deleted')
     } else {
         res.status(404).json(`No object with id ${id} found`)
-    } ß
+    }
 
 })
 )
@@ -74,6 +80,6 @@ let editOrder = expressAsyncHandler((async (req, res) => {
 
 
 
-export { newOrder, getAllOrders }
-//{idClient idProdus cantiate}
+export { newOrder, getAllOrders, getAllOrdersByCustomerId }
+
 

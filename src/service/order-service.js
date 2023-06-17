@@ -7,15 +7,42 @@ import { Sequelize } from "sequelize";
 
 
 
-async function getProductsWithIds(ids) {
+// async function getProductsWithIds(ids) {
+
+
+//     try {
+
+//         const products = await db.models.product.findAll({
+
+//             where: {
+//                 id: {
+//                     // id operator is in ids
+//                     [Sequelize.Op.in]: ids,
+//                 }
+//             },
+
+//         });
+
+//         return products;
+
+//     } catch (error) {
+//         console.error(error);
+//     }
+
+
+// }
+
+
+
+async function getOrdersByUser(ids) {
 
 
     try {
 
-        const products = await db.models.product.findAll({
+        const orders = await db.models.order.findAll({
 
             where: {
-                id: {
+                customer_id: {
                     // id operator is in ids
                     [Sequelize.Op.in]: ids,
                 }
@@ -23,7 +50,7 @@ async function getProductsWithIds(ids) {
 
         });
 
-        return products;
+        return orders;
 
     } catch (error) {
         console.error(error);
@@ -44,61 +71,56 @@ async function orderCheck(orderDto) {
 
     const { customer_id } = orderDto;
 
-    const { order } = orderDto;
+    const { customer_cart } = orderDto;
 
 
     const user = await db.models.customer.findByPk(customer_id);
-    console.log(user);
-
-
-    let map = new Map();
-
-
-    order.forEach(element => {
-
-        map.set(+element.product_id, element);
-    });
-
-
-
-    let products = await getProductsWithIds(Array.from(map.keys()));
-
-
-
 
 
 
 
     let amountTotal = 0;
 
-    products.forEach(element => {
+    customer_cart.forEach(element => {
 
         amountTotal += element.price;
 
     })
 
-
+    // console.log(amountTotal);
 
     let newOrder = {
-        amount: 10,
+        amount: amountTotal,
         customer_id: user.id
     }
 
 
-
     let createdOrder = await db.models.order.create(newOrder);
-    console.log(createdOrder);
+
+    // console.log(createdOrder.id);
 
 
 
-    // const orderDetails = db.models.order_details.bulkCreate([
 
 
 
-    // ])
+    customer_cart.forEach(element => {
 
-    // await createdOrder.addOrder_details(products)
-    // await createdOrder.save();
+        let order_details = {
+            price: element.price,
+            quantity: element.quantity,
+            product_id: element.id,
+            order_id: createdOrder.id
+        }
+
+        db.models.order_details.create(order_details)
+            .then((result) => {
+                console.log("ok");
+            }).catch((err) => {
+                console.log(err);
+            });
+
+    })
 
 
 }
@@ -110,4 +132,4 @@ async function orderCheck(orderDto) {
 
 
 
-export { orderCheck }
+export { orderCheck, getOrdersByUser }

@@ -19,9 +19,6 @@ export default (sequelize) => {
 
         amount: {
             type: Sequelize.INTEGER,
-            validate: {
-                allowNull: false
-            }
         },
 
 

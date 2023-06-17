@@ -4,6 +4,11 @@ import db from "./config/db.js";
 import productRouter from "./routes/product-route.js";
 import customerRouter from "./routes/customer-route.js";
 import orderRouter from "./routes/order-route.js";
+import orderDetailsRouter from "./routes/order_details-route.js";
+
+
+
+
 
 const app = express();
 
@@ -18,6 +23,8 @@ app.use("/api/v1/products", productRouter)
 
 app.use("/api/v1/customers", customerRouter)
 
+app.use('/api/v1/order-details', orderDetailsRouter)
+
 
 
 
@@ -30,3 +37,7 @@ db.sequelize.sync().then((result) => {
     })
 
 })
+
+
+
+
