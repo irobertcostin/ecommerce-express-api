@@ -19,14 +19,21 @@ let getAllOrderDetails = expressAsyncHandler((async (req, res) => {
 
 let getAllOrderDetailsByOrderId = expressAsyncHandler((async (req, res) => {
 
-    let id = req.params;
+    let ids = [];
+    ids.push(+req.params.id)
 
-    let x = await getDetailsById(id)
+    let x = await getDetailsById(ids)
 
-    console.log(x);
+    if (x.length > 0) {
+        res.status(200).json(x)
+    } else {
+        res.status(200).json({ info: "No order details found" })
+    }
 
 
-    res.status(200).json("ok")
+
+
+
 
 }))
 
