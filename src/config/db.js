@@ -4,6 +4,23 @@ import product from "../models/product.js";
 import order from "../models/order.js";
 import order_details from "../models/order_details.js";
 import customer from "../models/customer.js";
+import dotenv from "dotenv"
+
+// const { DB_NAME, DB_PASSWORD, DB_USER, DB_HOST, DB_DIAL, dotenv } = pkg;
+
+dotenv.config();
+
+let name = process.env.DB_NAME
+let user = process.env.DB_USER
+let pass = process.env.DB_PASSWORD
+let host = process.env.DB_HOST
+let dialect = process.env.DB_DIAL
+
+// console.log(name);
+// console.log(user);
+// console.log(pass);
+// console.log(host);
+// console.log(dialect);
 
 
 const connectDb = () => {
@@ -14,12 +31,12 @@ const connectDb = () => {
         // config sequelizeObj as new sequelize class
         let sequelizeObj = new Sequelize(
 
-            "ecommerce_db",
-            "root",
-            "Borisescul23",
+            name,
+            user,
+            pass,
             {
-                host: "localhost",
-                dialect: "mysql"
+                host: host,
+                dialect: dialect
             }
         )
 

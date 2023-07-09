@@ -21,6 +21,8 @@ async function getDetailsById(id) {
             }
         })
 
+
+
         return order_details;
 
     } catch (error) {
@@ -31,8 +33,23 @@ async function getDetailsById(id) {
 
 
 
+async function getProdPic(id) {
+
+    try {
+
+        const picture = await db.models.product.findByPk(id)
+        return picture.url;
+
+
+    } catch (error) {
+        return error;
+    }
+
+}
 
 
 
 
-export { getDetailsById }
+
+
+export { getDetailsById, getProdPic }

@@ -52,12 +52,8 @@ export default (sequelize) => {
                 }
             }
         },
-        url: {
-            type: Sequelize.STRING, // or DataTypes.TEXT for longer URLs
-            allowNull: false,
-            validate: {
-                isUrl: true, // enforce URL format validation
-            },
+        picture: {
+            type: Sequelize.BLOB("long")
         }
 
 

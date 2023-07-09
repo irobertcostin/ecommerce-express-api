@@ -32,6 +32,25 @@ let getAllOrdersByCustomerId = expressAsyncHandler((async (req, res) => {
 
 
 
+let getOrderById = expressAsyncHandler((async (req, res) => {
+
+    let id = req.params.id;
+
+    console.log(id);
+
+    let order = await db.models.order.findByPk(id);
+
+    if (order) {
+        res.status(200).json(order)
+    } else {
+        res.status(404).json("No orders by this ID")
+    }
+
+
+
+}))
+
+
 
 let newOrder = expressAsyncHandler((async (req, res) => {
 
@@ -80,6 +99,6 @@ let editOrder = expressAsyncHandler((async (req, res) => {
 
 
 
-export { newOrder, getAllOrders, getAllOrdersByCustomerId }
+export { newOrder, getAllOrders, getAllOrdersByCustomerId, getOrderById }
 
 

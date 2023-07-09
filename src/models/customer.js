@@ -1,5 +1,5 @@
 import { Sequelize } from "sequelize";
-
+import bcrypt from "bcrypt"
 
 
 export default (sequelize) => {
@@ -29,8 +29,22 @@ export default (sequelize) => {
             }
         },
         password: {
+            type: Sequelize.VIRTUAL,
+            allowNull: false,
+            validate: {
+                is: /^(?=.*[A-Z]).{8,}$/i // Regex constraint for at least 1 uppercase letter and minimum length of 8 characters
+            }
+        },
+
+        confirmedPassword: {
             type: Sequelize.STRING,
             allowNull: false,
+            set(val) {
+                if (val == this.password) {
+                    const hashPassword = bcrypt.hashSync(val, 10)
+                    this.setDataValue('confirmedPassword', hashPassword)
+                }
+            },
             validate: {
                 is: /^(?=.*[A-Z]).{8,}$/i // Regex constraint for at least 1 uppercase letter and minimum length of 8 characters
             }
@@ -48,6 +62,18 @@ export default (sequelize) => {
                 }
             }
         },
+        role: {
+            type: Sequelize.STRING,
+            allowNull: false,
+            validate: {
+                notNull: {
+                    msg: "Provide role"
+                },
+                notEmpty: {
+                    msg: "Provide role"
+                }
+            }
+        }
 
 
 
